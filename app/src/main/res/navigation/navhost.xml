@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navhost"
+    app:startDestination="@id/Home">
+
+    <fragment
+        android:id="@+id/Home"
+        android:name="com.example.remedy.Home"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_Home_to_settings"
+            app:destination="@id/settings"/>
+        <action
+            android:id="@+id/action_Home_to_taskGroup"
+            app:destination="@id/taskGroup"
+            app:enterAnim="@anim/slide_in_up"
+            app:exitAnim="@anim/slide_out_up"
+            app:popEnterAnim="@anim/slide_in_up"
+            app:popExitAnim="@anim/slide_out_up" />
+        <action
+            android:id="@+id/action_Home_to_dialogNewTaskGroup"
+            app:destination="@id/dialogNewTaskGroup" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/settings"
+        android:name="com.example.remedy.Settings"
+        android:label="Settings" >
+        <action
+            android:id="@+id/action_settings_to_Home"
+            app:destination="@id/Home" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskGroup"
+        android:name="com.example.remedy.TaskGroup"
+        android:label="fragment_task_group"
+        tools:layout="@layout/fragment_task_group" >
+        <action
+            android:id="@+id/action_taskGroup_to_Home"
+            app:destination="@id/Home" />
+        <action
+            android:id="@+id/action_taskGroup_to_newTaskForm"
+            app:destination="@id/newTaskForm"
+            app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_taskGroup_to_dialogNewTask"
+            app:destination="@id/dialogNewTask" />
+    </fragment>
+    <fragment
+        android:id="@+id/newTaskForm"
+        android:name="com.example.remedy.NewTaskForm"
+        android:label="fragment_new_task_form"
+        tools:layout="@layout/fragment_new_task_form" >
+        <action
+            android:id="@+id/action_newTaskForm_to_taskGroup"
+            app:destination="@id/taskGroup"
+            app:popUpTo="@id/taskGroup"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogNewTaskGroup"
+        android:name="com.example.remedy.DialogNewTaskGroup"
+        android:label="DialogNewTaskGroup" >
+        <action
+            android:id="@+id/action_dialogNewTaskGroup_to_Home"
+            app:destination="@id/Home" />
+    </dialog>
+    <dialog
+        android:id="@+id/dialogNewTask"
+        android:name="com.example.remedy.DialogNewTask"
+        android:label="DialogNewTask" >
+        <action
+            android:id="@+id/action_dialogNewTask_to_taskGroup"
+            app:destination="@id/taskGroup" />
+    </dialog>
+</navigation>

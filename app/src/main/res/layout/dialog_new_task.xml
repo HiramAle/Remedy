@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="20dp"
+    style="@style/background">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTaskName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="I'm going to..."
+                android:textColorHint="@color/greyIcon"
+                android:textColor="@color/greyIcon"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/montserrat_bold"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/editTextTaskText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Notes"
+                android:textColorHint="@color/greyIcon"
+                android:textColor="@color/greyIcon"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/dialogDateButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_calendar"
+                    android:textColor="@color/greyIcon"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/dialogNewTaskDateText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/greyIcon"/>
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/timeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_clock"
+                    android:textColor="@color/greyIcon"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/dialogNewTaskTimeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/greyIcon"/>
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/reminderButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_bell"
+                    android:textColor="@color/greyIcon"
+                    android:background="@android:color/transparent"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/dialogNewTaskReminderText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/greyIcon"/>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/dialogNewTaskGroupName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Group Name"
+                    android:textColor="@color/greyIcon"
+                    android:gravity="center"
+                    android:layout_weight="1"/>
+
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/submitDatabase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Add"
+                    android:textColor="@color/blackBackground"
+                    android:background="@drawable/edit_text_round"
+                    android:textAllCaps="false"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

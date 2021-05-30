@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menuNoReminder"
+        android:title="No Reminder"/>
+    <item
+        android:id="@+id/menuOnDay"
+        android:title="On Date"/>
+    <item
+        android:id="@+id/menuTenMinutes"
+        android:title="10 Minutes Before"/>
+    <item
+        android:id="@+id/menuOneDay"
+        android:title="1 Day Before"/>
+
+
+</menu>
