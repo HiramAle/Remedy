@@ -50,7 +50,7 @@ public class Home extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view,Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         final NavController navController = Navigation.findNavController(view);
@@ -58,7 +58,7 @@ public class Home extends Fragment {
         FloatingActionButton btnSettings = view.findViewById(R.id.fabSettings);
         FloatingActionButton btnAddGroupTask = view.findViewById(R.id.fabAddGroup);
         FloatingActionButton btnAllTask = view.findViewById(R.id.fabAllTask);
-        FloatingActionButton btnDialog = view.findViewById(R.id.fabHistory);
+        FloatingActionButton btnHistory = view.findViewById(R.id.fabHistory);
 
         btnSettings.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -72,6 +72,9 @@ public class Home extends Fragment {
         btnAddGroupTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("idCase",0);
+                bundle.putString("nameCase","Add");
                 navController.navigate(R.id.action_Home_to_dialogNewTaskGroup);
             }
         });
@@ -80,15 +83,18 @@ public class Home extends Fragment {
             public void onClick(View v) {
                 TaskGroupModel all = new TaskGroupModel();
                 all.setIdTaskGroup(0);
-                all.getTaskGroupName();
+                all.setTaskGroupName("All");
                 moveToTask(all);
             }
         });
 
-        btnDialog.setOnClickListener(new View.OnClickListener() {
+        btnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                TaskGroupModel completed = new TaskGroupModel();
+                completed.setIdTaskGroup(0);
+                completed.setTaskGroupName("Completed");
+                moveToTask(completed);
             }
         });
 

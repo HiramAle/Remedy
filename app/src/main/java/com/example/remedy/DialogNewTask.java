@@ -54,7 +54,7 @@ public class DialogNewTask extends BottomSheetDialogFragment {
         getTime(view);
         getReminder(view);
 
-        Button btnAdd = view.findViewById(R.id.submitDatabase);
+        ImageButton btnAdd = view.findViewById(R.id.submitDatabase);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

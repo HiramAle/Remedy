@@ -30,7 +30,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center">
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/dialogText"
                 android:layout_width="match_parent"
@@ -42,17 +43,21 @@
                 android:hint="New Task Group"
                 android:layout_margin="10dp"
                 android:textColor="@color/greyIcon"
-                android:layout_weight="1"/>
-            <androidx.appcompat.widget.AppCompatButton
+                android:layout_weight="1">
+                <requestFocus/>
+            </androidx.appcompat.widget.AppCompatEditText>
+
+
+            <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/dialogSubmit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add"
-                android:textColor="@color/blackBackground"
+                android:src="@drawable/ic_save"
+                android:textColor="@color/greyIcon"
                 android:background="@drawable/edit_text_round"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:textAllCaps="false"/>
+                android:padding="11dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>

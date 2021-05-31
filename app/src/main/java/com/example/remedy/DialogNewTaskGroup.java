@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.fragment.NavHostFragment;
@@ -28,15 +31,42 @@ public class DialogNewTaskGroup extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Button btnAdd = view.findViewById(R.id.dialogSubmit);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addTaskGroupDB(getNameGroup(view));
-                Bundle bundle = new Bundle();
-                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_dialogNewTaskGroup_to_Home);
+        ImageButton btnAdd = view.findViewById(R.id.dialogSubmit);
+        try {
+            if (getArguments().getInt("idCase")==0){
+                String option = getArguments().getString("nameCase");
+                switch (option){
+                    case "Add":
+                        btnAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                addTaskGroupDB(getNameGroup(view));
+                                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_dialogNewTaskGroup_to_Home);
+                            }
+                        });
+                        break;
+                    case "Edit":
+                        EditText editText = view.findViewById(R.id.dialogText);
+                        editText.setText(getArguments().getString("taskGroupName"));
+                        Toast.makeText(getContext(),getArguments().getString("taskGroupName"),Toast.LENGTH_SHORT).show();
+                        btnAdd.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                editGroup(view);
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("id",getArguments().getInt("taskGroupId"));
+                                bundle.putString("name",getNameGroup(view));
+                                NavHostFragment.findNavController(getParentFragment()).navigate(R.id.action_dialogNewTaskGroup_to_taskGroup,bundle);
+
+                            }
+                        });
+                        break;
+                }
             }
-        });
+        }catch (Exception e){
+
+        }
+
     }
 
     public String getNameGroup(View view){
@@ -51,6 +81,16 @@ public class DialogNewTaskGroup extends BottomSheetDialogFragment {
         ContentValues values = new ContentValues();
         values.put("taskGroupName",nameGroup);
         db.insert(DataBaseUtilities.dbTaskGroupTable,DataBaseUtilities.dbTaskGroup_Id,values);
+        db.close();
+    }
+
+    public void editGroup(View view){
+
+        SQLConnection connection = new SQLConnection(getActivity(),"bdRemedy",null,1);
+        SQLiteDatabase db = connection.getWritableDatabase();
+        ContentValues content = new ContentValues();
+        content.put("taskGroupName",getNameGroup(view));
+        db.update("taskGroup",content,"idTaskGroup = "+getArguments().getInt("taskGroupId"),null);
         db.close();
     }
 

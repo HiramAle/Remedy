@@ -42,24 +42,13 @@
             android:id="@+id/action_taskGroup_to_Home"
             app:destination="@id/Home" />
         <action
-            android:id="@+id/action_taskGroup_to_newTaskForm"
-            app:destination="@id/newTaskForm"
-            app:popUpToInclusive="false" />
-        <action
             android:id="@+id/action_taskGroup_to_dialogNewTask"
             app:destination="@id/dialogNewTask" />
-    </fragment>
-    <fragment
-        android:id="@+id/newTaskForm"
-        android:name="com.example.remedy.NewTaskForm"
-        android:label="fragment_new_task_form"
-        tools:layout="@layout/fragment_new_task_form" >
         <action
-            android:id="@+id/action_newTaskForm_to_taskGroup"
-            app:destination="@id/taskGroup"
-            app:popUpTo="@id/taskGroup"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_taskGroup_to_dialogNewTaskGroup"
+            app:destination="@id/dialogNewTaskGroup" />
     </fragment>
+
     <dialog
         android:id="@+id/dialogNewTaskGroup"
         android:name="com.example.remedy.DialogNewTaskGroup"
@@ -67,6 +56,11 @@
         <action
             android:id="@+id/action_dialogNewTaskGroup_to_Home"
             app:destination="@id/Home" />
+        <action
+            android:id="@+id/action_dialogNewTaskGroup_to_taskGroup"
+            app:destination="@id/taskGroup"
+            app:popUpTo="@id/taskGroup"
+            app:popUpToInclusive="true" />
     </dialog>
     <dialog
         android:id="@+id/dialogNewTask"
@@ -74,6 +68,8 @@
         android:label="DialogNewTask" >
         <action
             android:id="@+id/action_dialogNewTask_to_taskGroup"
-            app:destination="@id/taskGroup" />
+            app:destination="@id/taskGroup"
+            app:popUpTo="@id/taskGroup"
+            app:popUpToInclusive="true" />
     </dialog>
 </navigation>

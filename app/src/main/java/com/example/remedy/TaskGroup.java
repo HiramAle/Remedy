@@ -1,5 +1,6 @@
 package com.example.remedy;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -76,6 +77,10 @@ public class TaskGroup extends Fragment {
                             deleteTaskGroup(idTaskGroup);
                             navController.popBackStack();
                         }
+                        if(item.getTitle().equals("Edit")){
+                            moveToEditTaskGroup();
+
+                        }
                         return true;
                     }
                 });
@@ -86,10 +91,17 @@ public class TaskGroup extends Fragment {
 
         try {
             idTaskGroup=getArguments().getInt("id");
-
+            TaskGroupName = getArguments().getString("name");
             if (idTaskGroup==0){
-                dbTaskList(view);
                 btn.setVisibility(View.GONE);
+                switch (TaskGroupName){
+                    case "All":
+                        dbTaskAll(view);
+                        break;
+                    case "Completed":
+                        dbTaskCompleted(view);
+                        break;
+                }
                 //Toast.makeText(getContext(),"100tra",Toast.LENGTH_LONG).show();
             }else{
                 TaskGroupName=getArguments().getString("name");
@@ -135,7 +147,7 @@ public class TaskGroup extends Fragment {
         SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
         SQLiteDatabase db = connection.getReadableDatabase();
         TaskModel task = null;
-        Cursor cursor = db.rawQuery("SELECT * FROM task WHERE "+DataBaseUtilities.dbTask_TaskGroupId+" = ?", new String[] {String.valueOf(id)});
+        Cursor cursor = db.rawQuery("SELECT * FROM task WHERE "+DataBaseUtilities.dbTask_TaskGroupId+" = ? "+"AND status = '1'" , new String[] {String.valueOf(id)});
         elements = new ArrayList<>();
         while (cursor.moveToNext()) {
             task = new TaskModel();
@@ -156,11 +168,34 @@ public class TaskGroup extends Fragment {
         itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
-    public void dbTaskList(View view) {
+    public void dbTaskCompleted(View view){
         SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
         SQLiteDatabase db = connection.getReadableDatabase();
         TaskModel task = null;
-        Cursor cursor = db.rawQuery("SELECT * FROM task" ,null);
+        Cursor cursor = db.rawQuery("SELECT * FROM task WHERE status = '0'" , null);
+        elements = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            task = new TaskModel();
+            task.setIdTask(cursor.getInt(0));
+            task.setTaskName(cursor.getString(1));
+            task.setTaskText(cursor.getString(2));
+            task.setTaskDate(cursor.getString(3));
+            task.setTaskTime(cursor.getString(4));
+            task.setReminder(cursor.getString(5));
+            elements.add(task);
+        }
+        listAdapter = new Adapter(elements, getContext());
+        RecyclerView recyclerView = view.findViewById(R.id.taskRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(listAdapter);
+        db.close();
+    }
+
+    public void dbTaskAll(View view) {
+        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
+        SQLiteDatabase db = connection.getReadableDatabase();
+        TaskModel task = null;
+        Cursor cursor = db.rawQuery("SELECT * FROM task WHERE status = 1" ,null);
         elements = new ArrayList<>();
         while (cursor.moveToNext()) {
             task = new TaskModel();
@@ -192,40 +227,82 @@ public class TaskGroup extends Fragment {
 
     }
 
-    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
         @Override
-        public boolean onMove(@NonNull @NotNull RecyclerView recyclerView, @NonNull @NotNull RecyclerView.ViewHolder viewHolder, @NonNull @NotNull RecyclerView.ViewHolder target) {
+        public boolean onMove(RecyclerView recyclerView,RecyclerView.ViewHolder viewHolder,RecyclerView.ViewHolder target) {
             return false;
         }
         @Override
-        public void onSwiped(@NonNull @NotNull RecyclerView.ViewHolder viewHolder, int direction) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.AlertDialogCustom);
-            builder.setTitle("Completed Task");
-            //builder.setMessage("Task completed?");
+        public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
 
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    int position = viewHolder.getAdapterPosition();
-                    Toast.makeText(getContext(), elements.get(position).getTaskName() + " completed", Toast.LENGTH_LONG).show();
-                    SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
-                    SQLiteDatabase db = connection.getWritableDatabase();
-                    String param = String.valueOf(elements.get(position).getIdTask());
-                    db.delete(DataBaseUtilities.dbTaskTable, DataBaseUtilities.dbTaskId + "=" + param, null);
-                    db.close();
-                    elements.remove(position);
-                    listAdapter.notifyItemRemoved(position);
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
-                }
-            });
-            builder.show();
+            if (direction == ItemTouchHelper.RIGHT){
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                dialogBuilder.setTitle("Completed Task?");
+                dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int position = viewHolder.getAdapterPosition();
+                        Toast.makeText(getContext(), elements.get(position).getTaskName() + " completed", Toast.LENGTH_LONG).show();
+                        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
+                        SQLiteDatabase db = connection.getWritableDatabase();
+                        String param = String.valueOf(elements.get(position).getIdTask());
+                        ContentValues content = new ContentValues();
+                        content.put("status",0);
+                        db.update("task",content,"idTask="+param,null);
+                        db.close();
+                        elements.remove(position);
+                        listAdapter.notifyItemRemoved(position);
+
+                    }
+                });
+                dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                    }
+                });
+                dialogBuilder.show();
+            }
+
+            if (direction == ItemTouchHelper.LEFT){
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getContext());
+                dialogBuilder.setTitle("Delete Task?");
+                dialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        int position = viewHolder.getAdapterPosition();
+                        Toast.makeText(getContext(), elements.get(position).getTaskName() + " deleted", Toast.LENGTH_LONG).show();
+                        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
+                        SQLiteDatabase db = connection.getWritableDatabase();
+                        String param = String.valueOf(elements.get(position).getIdTask());
+                        ContentValues content = new ContentValues();
+                        content.put("status",0);
+                        db.delete("task","idTask = "+param,null);
+                        db.close();
+                        elements.remove(position);
+                        listAdapter.notifyItemRemoved(position);
+                    }
+                });
+                dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listAdapter.notifyItemChanged(viewHolder.getAdapterPosition());
+                    }
+                });
+                dialogBuilder.show();
+            }
         }
     };
+
+    public void moveToEditTaskGroup(){
+        Bundle bundle = new Bundle();
+        bundle.putInt("idCase",0);
+        bundle.putString("nameCase","Edit");
+        bundle.putInt("taskGroupId",idTaskGroup);
+        bundle.putString("taskGroupName",TaskGroupName);
+        final NavController navController = Navigation.findNavController(getView());
+        navController.navigate(R.id.action_taskGroup_to_dialogNewTaskGroup,bundle);
+    }
 
     public void moveToTaskForm(){
         Bundle bundle = new Bundle();

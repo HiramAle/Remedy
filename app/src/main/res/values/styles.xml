@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AlertDialogCustom" parent="android:Theme.Material.Light.Dialog.Alert">
+    <style name="AlertDialogCustom">
         <item name="android:textColorPrimary">@color/greyIcon</item>
         <item name="android:background">@color/blackBackground</item>
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>

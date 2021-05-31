@@ -14,6 +14,8 @@ public class DataBaseUtilities {
     public static final String dbTask_Reminder = "taskReminder";
     public static final String dbTask_Status = "taskStatus";
     public static  final String dbTask_TaskGroupId = "taskGroupId";
+    public static  final String dbTask_ContactName = "contactName";
+    public static  final String dbTask_ContactNumber = "contactNumber";
     //DataBase task table
     public static final String dbCreateTaskTable = "CREATE TABLE task(" +
             "idTask INTEGER PRIMARY KEY   AUTOINCREMENT, " +
@@ -23,7 +25,9 @@ public class DataBaseUtilities {
             "time TEXT , " +
             "reminder INTEGER, " +
             "status INTEGER DEFAULT 1, " +
-            "taskGroupId INTEGER)";
+            "taskGroupId INTEGER, " +
+            "contactName TEXT, " +
+            "contactNumber TEXT)";
 
     //TaskGroup table name
     public static final String dbTaskGroupTable = "taskGroup";

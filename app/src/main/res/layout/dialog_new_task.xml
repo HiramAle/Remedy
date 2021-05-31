@@ -13,7 +13,8 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextTaskName"
                 android:layout_width="match_parent"
@@ -25,7 +26,12 @@
                 android:padding="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:fontFamily="@font/montserrat_bold"/>
+                android:fontFamily="@font/montserrat_bold">
+                <requestFocus/>
+            </androidx.appcompat.widget.AppCompatEditText>
+
+
+
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/editTextTaskText"
@@ -42,50 +48,80 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:gravity="center">
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/dialogDateButton"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_calendar"
-                    android:textColor="@color/greyIcon"
-                    android:background="@android:color/transparent"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/dialogNewTaskDateText"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/dialogDateButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_calendar"
+                        android:textColor="@color/greyIcon"
+                        android:background="@android:color/transparent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dialogNewTaskDateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/greyIcon"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/timeButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_clock"
+                        android:textColor="@color/greyIcon"
+                        android:background="@android:color/transparent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dialogNewTaskTimeText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/greyIcon"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/greyIcon"/>
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/timeButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_clock"
-                    android:textColor="@color/greyIcon"
-                    android:background="@android:color/transparent"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/dialogNewTaskTimeText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/greyIcon"/>
-                <androidx.appcompat.widget.AppCompatImageButton
-                    android:id="@+id/reminderButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_bell"
-                    android:textColor="@color/greyIcon"
-                    android:background="@android:color/transparent"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"/>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/dialogNewTaskReminderText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/greyIcon"/>
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/reminderButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_bell"
+                        android:textColor="@color/greyIcon"
+                        android:background="@android:color/transparent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dialogNewTaskReminderText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/greyIcon"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/contactButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_contact"
+                        android:textColor="@color/greyIcon"
+                        android:background="@android:color/transparent"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginRight="30dp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/dialogNewTaskContactText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/greyIcon"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -102,20 +138,21 @@
                     android:layout_height="wrap_content"
                     android:text="Group Name"
                     android:textColor="@color/greyIcon"
-                    android:gravity="center"
+                    android:fontFamily="@font/montserrat_bold"
                     android:layout_weight="1"/>
 
 
 
-                <androidx.appcompat.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/submitDatabase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Add"
-                    android:textColor="@color/blackBackground"
+                    android:src="@drawable/ic_save"
+                    android:textColor="@color/greyIcon"
                     android:background="@drawable/edit_text_round"
-                    android:textAllCaps="false"/>
+                    android:padding="11dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
