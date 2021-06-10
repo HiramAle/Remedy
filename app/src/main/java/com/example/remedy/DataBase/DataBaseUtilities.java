@@ -1,9 +1,6 @@
 package com.example.remedy.DataBase;
 
 public class DataBaseUtilities {
-
-
-
     //Task table name
     public static final String dbTaskTable = "task";
     //Task table data
@@ -23,7 +20,7 @@ public class DataBaseUtilities {
             "taskText TEXT, " +
             "date TEXT, " +
             "time TEXT , " +
-            "reminder INTEGER, " +
+            "reminder TEXT, " +
             "status INTEGER DEFAULT 1, " +
             "taskGroupId INTEGER, " +
             "contactName TEXT, " +
@@ -36,8 +33,6 @@ public class DataBaseUtilities {
     public static final String dbTaskGroup_Name = "taskGroupName";
     //DataBase task table
     public static final String dbCreateTaskGroupTable = "CREATE TABLE taskGroup(" +
-            "idTaskGroup INTEGER PRIMARY KEY   AUTOINCREMENT, " +
+            "taskGroupId INTEGER PRIMARY KEY   AUTOINCREMENT, " +
             "taskGroupName TEXT)";
-
-
 }

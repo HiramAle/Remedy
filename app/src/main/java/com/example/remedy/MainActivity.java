@@ -1,40 +1,41 @@
 package com.example.remedy;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
-import android.app.DialogFragment;
+import android.app.ProgressDialog;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.DatePicker;
+import android.os.Environment;
+import android.widget.Toast;
 
-import com.example.remedy.Adapter.Adapter;
 import com.example.remedy.DataBase.SQLConnection;
-import com.example.remedy.Model.TaskModel;
 
-import java.text.DateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity{
-
-
-
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         //Hide Title Bar
         this.getSupportActionBar().hide();
-
+        //Set the layout for the Navigation Host
         setContentView(R.layout.activity_main);
-
-        SQLConnection connection = new SQLConnection(this,"bdRemedy",null,1);
-
+        //Create Data Base
+        SQLConnection connection = new SQLConnection(this, "bdRemedy", null, 1);
     }
 
+
+
+
+
+
+
+
+
+
+
 }
+

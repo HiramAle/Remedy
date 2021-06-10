@@ -14,14 +14,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
-                <ImageView
-                    android:id="@+id/colorCard"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:background="@drawable/groupshape"
 
-                    android:src="@drawable/icontask"
-                    android:padding="15dp"/>
+                        <ImageView
+                            android:id="@+id/colorCard"
+                            android:layout_width="80dp"
+                            android:layout_height="80dp"
+                            android:src="@drawable/ic_list"
+
+                            android:background="@drawable/groupshape"
+                            android:padding="15dp"/>
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/cvTaskGroupName"
                     android:layout_width="wrap_content"

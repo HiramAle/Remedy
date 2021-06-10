@@ -12,6 +12,7 @@
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/cvLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true">
@@ -57,6 +58,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/cvDateIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_calendar"
@@ -76,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/cvTimeIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clock"
@@ -94,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/cvReminderIcon"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_bell"
@@ -106,6 +110,32 @@
                         android:text="Task Rem"
                         android:textColor="@color/greyIcon"
                         android:paddingBottom="5dp"/>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/cvContactIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_contact"
+                        android:layout_marginRight="10dp"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/cvContact"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Task Contact"
+                        android:textColor="@color/greyIcon"
+                        android:paddingBottom="5dp"/>
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/cvContactOptions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_more_vert"
+                        android:background="@android:color/transparent"
+                        android:layout_marginLeft="10dp"/>
                 </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
 

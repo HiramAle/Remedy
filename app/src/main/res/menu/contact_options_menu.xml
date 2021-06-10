@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/menuCallContact"
+        android:title="Call"/>
+    <item
+        android:id="@+id/menuMessageContact"
+        android:title="Send Message"/>
+
+</menu>

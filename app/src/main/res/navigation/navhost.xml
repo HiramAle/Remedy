@@ -17,9 +17,9 @@
             android:id="@+id/action_Home_to_taskGroup"
             app:destination="@id/taskGroup"
             app:enterAnim="@anim/slide_in_up"
-            app:exitAnim="@anim/slide_out_up"
-            app:popEnterAnim="@anim/slide_in_up"
-            app:popExitAnim="@anim/slide_out_up" />
+            app:exitAnim="@anim/wait"
+            app:popEnterAnim="@anim/wait"
+            app:popExitAnim="@anim/slide_in_down" />
         <action
             android:id="@+id/action_Home_to_dialogNewTaskGroup"
             app:destination="@id/dialogNewTaskGroup" />
@@ -40,7 +40,11 @@
         tools:layout="@layout/fragment_task_group" >
         <action
             android:id="@+id/action_taskGroup_to_Home"
-            app:destination="@id/Home" />
+            app:destination="@id/Home"
+            app:enterAnim="@anim/wait"
+            app:exitAnim="@anim/slide_in_down"
+            app:popEnterAnim="@anim/slide_in_down"
+            app:popExitAnim="@anim/slide_in_down" />
         <action
             android:id="@+id/action_taskGroup_to_dialogNewTask"
             app:destination="@id/dialogNewTask" />
@@ -55,7 +59,9 @@
         android:label="DialogNewTaskGroup" >
         <action
             android:id="@+id/action_dialogNewTaskGroup_to_Home"
-            app:destination="@id/Home" />
+            app:destination="@id/Home"
+            app:popUpTo="@id/Home"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_dialogNewTaskGroup_to_taskGroup"
             app:destination="@id/taskGroup"

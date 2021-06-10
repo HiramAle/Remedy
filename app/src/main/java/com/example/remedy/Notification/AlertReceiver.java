@@ -13,14 +13,11 @@ public class AlertReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        //String title = intent.getStringExtra("Title");
-        //String message = intent.getStringExtra("Message");
 
         Bundle bundle = intent.getBundleExtra("bundle");
 
-        String title = (String)bundle.getString("Title");
-        String message = (String)bundle.getString("Message");
-
+        String title = bundle.getString("Title");
+        String message = bundle.getString("Message");
 
         NotificationHelper notificationHelper = new NotificationHelper(context);
         NotificationCompat.Builder nb = notificationHelper.getChannelNotification(title,message);

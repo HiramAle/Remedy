@@ -4,15 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.remedy.Model.TaskGroupModel;
-import com.example.remedy.Model.TaskModel;
 import com.example.remedy.R;
-import com.example.remedy.TaskGroup;
 
 import java.util.List;
 

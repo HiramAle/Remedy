@@ -57,6 +57,7 @@
                     android:layout_marginTop="10dp">
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/dialogDateButton"
+                        android:tooltipText="Set Date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_calendar"
@@ -71,6 +72,7 @@
                         android:textColor="@color/greyIcon"/>
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/timeButton"
+                        android:tooltipText="Set Time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_clock"
@@ -93,6 +95,7 @@
                     android:layout_marginBottom="10dp">
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/reminderButton"
+                        android:tooltipText="Set Reminder"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_bell"
@@ -107,6 +110,7 @@
                         android:textColor="@color/greyIcon"/>
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/contactButton"
+                        android:tooltipText="Set Contact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_contact"
@@ -145,6 +149,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/submitDatabase"
+                    android:tooltipText="Save Task"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_save"

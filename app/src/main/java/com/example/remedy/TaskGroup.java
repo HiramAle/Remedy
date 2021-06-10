@@ -6,12 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.AppCompatCheckBox;
-import androidx.core.widget.TextViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,8 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,25 +22,22 @@ import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
-import com.example.remedy.Adapter.Adapter;
+import com.example.remedy.Adapter.TaskAdapter;
 import com.example.remedy.DataBase.DataBaseUtilities;
 import com.example.remedy.DataBase.SQLConnection;
-import com.example.remedy.Model.TaskGroupModel;
 import com.example.remedy.Model.TaskModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class TaskGroup extends Fragment {
 
     List<TaskModel> elements;
-    Adapter listAdapter;
+    TaskAdapter listAdapter;
     int idTaskGroup;
     String TaskGroupName;
+    RecyclerView recyclerViewTaskList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,11 +49,11 @@ public class TaskGroup extends Fragment {
         return inflater.inflate(R.layout.fragment_task_group, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         final NavController navController = Navigation.findNavController(view);
+        recyclerViewTaskList = view.findViewById(R.id.taskRecyclerView);
         ImageButton btn = view.findViewById(R.id.btnMoreOptions);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,14 +62,15 @@ public class TaskGroup extends Fragment {
                 menusito.getMenuInflater().inflate(R.menu.group_task_menu,menusito.getMenu());
                 menusito.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     public boolean onMenuItemClick(MenuItem item) {
-                        //Toast.makeText(getContext(),"You Clicked : " + item.getTitle(),Toast.LENGTH_SHORT).show();
-                        if (item.getTitle().equals("Delete")){
-                            deleteTaskGroup(idTaskGroup);
-                            navController.popBackStack();
-                        }
-                        if(item.getTitle().equals("Edit")){
-                            moveToEditTaskGroup();
-
+                        String option = item.getTitle().toString();
+                        switch (option){
+                            case "Delete":
+                                deleteTaskGroup(idTaskGroup);
+                                navController.popBackStack();
+                                break;
+                            case "Edit":
+                                moveToEditTaskGroup();
+                                break;
                         }
                         return true;
                     }
@@ -92,6 +83,10 @@ public class TaskGroup extends Fragment {
         try {
             idTaskGroup=getArguments().getInt("id");
             TaskGroupName = getArguments().getString("name");
+            TaskGroupName=getArguments().getString("name");
+            //Toast.makeText(getContext(), String.valueOf(idTaskGroup)+","+TaskGroupName , Toast.LENGTH_SHORT).show();
+            androidx.appcompat.widget.AppCompatTextView txt=getView().findViewById(R.id.taskTitle);
+            txt.setText(getArguments().getString("name"));
             if (idTaskGroup==0){
                 btn.setVisibility(View.GONE);
                 switch (TaskGroupName){
@@ -102,34 +97,17 @@ public class TaskGroup extends Fragment {
                         dbTaskCompleted(view);
                         break;
                 }
-                //Toast.makeText(getContext(),"100tra",Toast.LENGTH_LONG).show();
+                txt.append(" Tasks");
             }else{
-                TaskGroupName=getArguments().getString("name");
-                androidx.appcompat.widget.AppCompatTextView txt=getView().findViewById(R.id.taskTitle);
-                txt.setText(getArguments().getString("name"));
-                dbTask(view,idTaskGroup);
+                //TaskGroupName=getArguments().getString("name");
+                //androidx.appcompat.widget.AppCompatTextView txt=getView().findViewById(R.id.taskTitle);
+                //txt.setText(getArguments().getString("name"));
+                dbTasksFromGroup(view,idTaskGroup);
             }
         }catch (Exception e){
 
         }
-
         btnNewTask(view);
-        //dbTaskList(view);
-
-        // This callback will only be called when MyFragment is at least Started.
-        /*OnBackPressedCallback callback = new OnBackPressedCallback(true) {
-            @Override
-            public void handleOnBackPressed() {
-                final NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_taskGroup_to_Home);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);*/
-
-
-
-
-
     }
 
     public void btnNewTask(View view) {
@@ -143,56 +121,29 @@ public class TaskGroup extends Fragment {
         });
     }
 
-    public void dbTask(View view,int id){
-        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
-        SQLiteDatabase db = connection.getReadableDatabase();
-        TaskModel task = null;
+    public void dbTasksFromGroup(View view,int id){
+        SQLiteDatabase db = getReadableDB();
+        //Toast.makeText(getContext(),"dbTasksFromGroup:"+String.valueOf(id), Toast.LENGTH_SHORT).show();
         Cursor cursor = db.rawQuery("SELECT * FROM task WHERE "+DataBaseUtilities.dbTask_TaskGroupId+" = ? "+"AND status = '1'" , new String[] {String.valueOf(id)});
-        elements = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            task = new TaskModel();
-            task.setIdTask(cursor.getInt(0));
-            task.setTaskName(cursor.getString(1));
-            task.setTaskText(cursor.getString(2));
-            task.setTaskDate(cursor.getString(3));
-            task.setTaskTime(cursor.getString(4));
-            task.setReminder(cursor.getString(5));
-            elements.add(task);
-        }
-        listAdapter = new Adapter(elements, getContext());
+        getDataDB(cursor);
         RecyclerView recyclerView = view.findViewById(R.id.taskRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(listAdapter);
+        setList();
+        setTouchHelper();
         db.close();
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
+        cursor.close();
     }
 
     public void dbTaskCompleted(View view){
-        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
-        SQLiteDatabase db = connection.getReadableDatabase();
-        TaskModel task = null;
+        SQLiteDatabase db = getReadableDB();
         Cursor cursor = db.rawQuery("SELECT * FROM task WHERE status = '0'" , null);
-        elements = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            task = new TaskModel();
-            task.setIdTask(cursor.getInt(0));
-            task.setTaskName(cursor.getString(1));
-            task.setTaskText(cursor.getString(2));
-            task.setTaskDate(cursor.getString(3));
-            task.setTaskTime(cursor.getString(4));
-            task.setReminder(cursor.getString(5));
-            elements.add(task);
-        }
-        listAdapter = new Adapter(elements, getContext());
-        RecyclerView recyclerView = view.findViewById(R.id.taskRecyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(listAdapter);
+        getDataDB(cursor);
+        setList();
         db.close();
+        cursor.close();
     }
 
     public void dbTaskAll(View view) {
-        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
+        /*SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
         SQLiteDatabase db = connection.getReadableDatabase();
         TaskModel task = null;
         Cursor cursor = db.rawQuery("SELECT * FROM task WHERE status = 1" ,null);
@@ -207,14 +158,17 @@ public class TaskGroup extends Fragment {
             task.setReminder(cursor.getString(5));
             elements.add(task);
         }
-        listAdapter = new Adapter(elements, getContext());
+        listAdapter = new TaskAdapter(elements, getContext());
         RecyclerView recyclerView = view.findViewById(R.id.taskRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(listAdapter);
         db.close();
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
+        itemTouchHelper.attachToRecyclerView(recyclerView);*/
+        SQLiteDatabase db = getReadableDB();
+        Cursor cursor = db.rawQuery("SELECT * FROM task WHERE status = 1" ,null);
+        getDataDB(cursor);
+        setList();
     }
 
     public void deleteTaskGroup(int idTaskGroup){
@@ -224,10 +178,10 @@ public class TaskGroup extends Fragment {
         db.delete(DataBaseUtilities.dbTaskTable, DataBaseUtilities.dbTask_TaskGroupId + "=" + param, null);
         db.delete(DataBaseUtilities.dbTaskGroupTable, DataBaseUtilities.dbTaskGroup_Id + "=" + param, null);
         db.close();
-
     }
 
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT | ItemTouchHelper.LEFT) {
+
         @Override
         public boolean onMove(RecyclerView recyclerView,RecyclerView.ViewHolder viewHolder,RecyclerView.ViewHolder target) {
             return false;
@@ -311,4 +265,46 @@ public class TaskGroup extends Fragment {
         final NavController navController = Navigation.findNavController(getView());
         navController.navigate(R.id.action_taskGroup_to_dialogNewTask,bundle);
     }
+
+    private SQLiteDatabase getReadableDB(){
+        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
+        return connection.getReadableDatabase();
+    }
+
+    private SQLiteDatabase getWriteableDB(){
+        SQLConnection connection = new SQLConnection(getActivity(), "bdRemedy", null, 1);
+        return connection.getWritableDatabase();
+    }
+
+    private void getDataDB(Cursor cursor){
+        TaskModel task = null;
+        elements = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            task = new TaskModel();
+            task.setIdTask(cursor.getInt(0));
+            task.setTaskName(cursor.getString(1));
+            task.setTaskText(cursor.getString(2));
+            task.setTaskDate(cursor.getString(3));
+            task.setTaskTime(cursor.getString(4));
+            task.setReminder(cursor.getString(5));
+            task.setIdTaskGroup(idTaskGroup);
+            //Toast.makeText(getContext(), String.valueOf(task.getIdTaskGroup()), Toast.LENGTH_SHORT).show();
+            task.setContactName(cursor.getString(8));
+            task.setContactNumber(cursor.getString(9));
+            elements.add(task);
+        }
+    }
+
+    private void setList(){
+        listAdapter = new TaskAdapter(elements, getContext());
+        recyclerViewTaskList = getView().findViewById(R.id.taskRecyclerView);
+        recyclerViewTaskList.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewTaskList.setAdapter(listAdapter);
+    }
+
+    private void setTouchHelper(){
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerViewTaskList);
+    }
+
 }

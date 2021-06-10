@@ -28,8 +28,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/roundshape">
 
+
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabSearch"
+                    android:tooltipText="Search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/iconsearch"
@@ -51,6 +53,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabUser"
+                    android:tooltipText="Account"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/iconuser"
@@ -71,6 +74,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabSettings"
+                    android:tooltipText="Settings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/iconsettings"
@@ -100,6 +104,7 @@
 
                 <androidx.appcompat.widget.AppCompatImageButton
                     android:id="@+id/buttonCalendar"
+                    android:tooltipText="Calendar"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/icontoday" />
@@ -108,6 +113,7 @@
             <!--Today Button-->
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/buttonToday"
+                android:tooltipText="Today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -129,6 +135,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabAllTask"
+                    android:tooltipText="All Tasks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/icontask"
@@ -147,6 +154,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabHistory"
+                    android:tooltipText="Completed Tasks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_history"
@@ -156,7 +164,6 @@
                     app:elevation="0dp"
                     app:tint="@color/greyIcon"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -174,9 +181,6 @@
                 android:layout_gravity="center"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -190,6 +194,7 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fabAddGroup"
+                    android:tooltipText="Add Task"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/iconadd"

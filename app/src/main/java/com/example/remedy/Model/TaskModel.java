@@ -11,6 +11,8 @@ public class TaskModel {
     private String reminder;
     private int idTaskGroup;
     private String taskTime;
+    private String contactName;
+    private String contactNumber;
 
     public TaskModel(){
 
@@ -78,5 +80,21 @@ public class TaskModel {
 
     public void setTaskTime(String taskTime) {
         this.taskTime = taskTime;
+    }
+
+    public String getContactName() {
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 }
