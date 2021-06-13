@@ -94,7 +94,7 @@ public class DialogNewTask extends BottomSheetDialogFragment {
 
                 SQLConnection connection = new SQLConnection(getActivity(),"bdRemedy",null,1);
                 SQLiteDatabase db = connection.getReadableDatabase();
-                Cursor cursor = db.rawQuery("SELECT taskGroupName FROM taskGroup WHERE idTaskGroup = "+String.valueOf(getArguments().getInt("idTaskGroup")) ,null);
+                Cursor cursor = db.rawQuery("SELECT taskGroupName FROM taskGroup WHERE taskGroupId = "+getArguments().getInt("idTaskGroup") ,null);
                 while(cursor.moveToNext()){
                     taskGroup.setText(cursor.getString(0));
                     //Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
@@ -150,7 +150,8 @@ public class DialogNewTask extends BottomSheetDialogFragment {
                 });
             }
         }catch (Exception e){
-            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+
         }
 
 
@@ -351,7 +352,7 @@ public class DialogNewTask extends BottomSheetDialogFragment {
         values.put("contactNumber",contactNumber);
         //values.put("reminder","true");
         db.insert("task","idTask",values);
-        //Toast.makeText(getActivity().getApplicationContext(), "ID: "+idDB,Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity().getApplicationContext(), "ID: "+contactNumber,Toast.LENGTH_LONG).show();
         db.close();
         setReminder(reminderText.getText().toString());
     }
